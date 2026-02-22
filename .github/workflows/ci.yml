@@ -259,8 +259,8 @@ jobs:
     name: "Stub Test"
     needs: linux
     steps:
-      - uses: actions/download-artifact@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/download-artifact@v7
+      - uses: actions/setup-python@v6
         with:
           python-version: 3.x
       - run: pip install wheels-linux-x86_64/*
