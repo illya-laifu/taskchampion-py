@@ -28,8 +28,9 @@ jobs:
             target: x86_64
           - runner: ubuntu-22.04
             target: x86
-          - runner: ubuntu-22.04
-            target: aarch64
+
+          # - runner: ubuntu-22.04
+          #   target: aarch64
           - runner: ubuntu-22.04
             target: armv7
           - runner: ubuntu-22.04
@@ -252,3 +253,17 @@ jobs:
         with:
           command: upload
           args: --non-interactive --skip-existing wheels-*/*
+
+  stubtest:
+    runs-on: ubuntu-latest
+    name: "Stub Test"
+    needs: linux
+    steps:
+      - uses: actions/download-artifact@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.x
+      - run: pip install wheels-linux-x86_64/*
+      - run: pip install mypy
+      - run: python -m mypy.stubtest taskchampion --ignore-missing-stub
+
